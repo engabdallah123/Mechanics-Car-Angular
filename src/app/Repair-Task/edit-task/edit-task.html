@@ -1,0 +1,147 @@
+<div class="modal-dialog-custom">
+  <div class="modal-content-custom">
+    <!-- Header -->
+    <div class="modal-header-custom">
+      <h5 class="modal-title-custom">Edit Repair Task</h5>
+      <button type="button" class="btn-close-custom" (click)="cancel()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body-custom" *ngIf="!loading; else loadingTemplate">
+      <form [formGroup]="editForm" (ngSubmit)="submit()">
+        <!-- Task Name -->
+        <div class="mb-3">
+          <label for="taskName" class="form-label-custom">
+            Task Name <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="taskName"
+            formControlName="name"
+            class="form-control-custom"
+            placeholder="Some Task"
+          />
+        </div>
+
+        <!-- Labor & Duration -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label for="laborCost" class="form-label-custom">
+              Labor Cost <span class="required">*</span>
+            </label>
+            <div class="input-group-custom">
+              <input
+                type="number"
+                id="laborCost"
+                formControlName="laborCost"
+                class="form-control-custom"
+                placeholder="100"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="duration" class="form-label-custom">
+              Duration (minutes)
+            </label>
+            <select
+              id="duration"
+              formControlName="duration"
+              class="form-select-custom"
+            >
+              @for (option of durationOptions; track option) {
+                <option [value]="option">{{ formatDuration(option) }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <!-- Parts Section -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <label class="form-label-custom mb-0">
+            Parts Required <span class="required">*</span>
+          </label>
+          <button type="button" class="btn btn-add-part" (click)="addPart()">
+            + Add Part
+          </button>
+        </div>
+
+        <!-- Parts Header -->
+        <div class="parts-table-header row g-2 mb-2">
+          <div class="col-md-5">Part Name</div>
+          <div class="col-md-3 text-end">Cost $</div>
+          <div class="col-md-3">Quantity</div>
+          <div class="col-md-1"></div>
+        </div>
+
+        <!-- Parts Rows -->
+        <div formArrayName="parts" class="parts-form-array">
+          @for (part of parts.controls; track $index) {
+            <div
+              [formGroupName]="$index"
+              class="row g-2 mb-2 align-items-center"
+            >
+              <div class="col-md-5">
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="form-control-custom"
+                  placeholder="Part Name"
+                />
+              </div>
+              <div class="col-md-3">
+                <div class="input-group-custom">
+                  <input
+                    type="number"
+                    formControlName="unitPrice"
+                    class="form-control-custom text-end"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <input
+                  type="number"
+                  formControlName="quantity"
+                  class="form-control-custom"
+                  placeholder="1"
+                />
+              </div>
+              <div class="col-md-1 text-center">
+                <button
+                  type="button"
+                  class="btn-delete-part"
+                  (click)="removePart($index)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </form>
+    </div>
+
+    <!-- Loading Spinner -->
+    <ng-template #loadingTemplate>
+      <div class="p-4 text-center text-muted">Loading task details...</div>
+    </ng-template>
+
+    <!-- Footer -->
+    <div class="modal-footer-custom">
+      <button
+        type="submit"
+        class="btn btn-create-task"
+        [disabled]="editForm.invalid"
+        (click)="submit()"
+      >
+        Save Changes
+      </button>
+      <button type="button" class="btn btn-cancel" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

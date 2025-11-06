@@ -1,0 +1,92 @@
+<!-- Overlay يغطي الشاشة -->
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>New WorkOrder</h2>
+      <button class="modal-close-btn" aria-label="Close" (click)="cancel()">&times;</button>
+    </div>
+ <div class="time" style="margin-left:25px">
+  <strong>⏰ Time:</strong> {{ formatTime(slot?.startTime) }} → {{ formatTime(slot?.endTime) }}
+</div>
+<div class="slot" style="padding-left: 25px;
+    font-size: 21px;">
+  <strong>🚘 Station:</strong> <span
+     style="
+    margin-left: 10px;
+    font-size: 28px;
+    font-weight: bold;"
+    (click)="selectStation(station?.name)"
+    [ngStyle]="{
+      'color': selectedStation === station?.name ? getStationColor(station?.name) : 'black'
+    }">{{ station?.name }}</span>
+</div>
+
+
+
+    <div class="modal-body">
+      <form [formGroup]="addOrderForm" class="form">
+        <!-- Customer -->
+        <div class="form-group">
+          <label for="customer">Customer</label>
+          <select id="customer" class="form-select" formControlName="customerId">
+            <option value="">-- Select Customer --</option>
+            <option *ngFor="let c of customers" [value]="c.customerId">
+              {{ c.customerName }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Vehicle -->
+        <div class="form-group">
+          <label for="vehicle">Vehicle</label>
+          <select id="vehicle" class="form-select" formControlName="vehicleId">
+            <option value="">-- Select Vehicle --</option>
+            <option *ngFor="let v of selectedCustomer?.vehicles" [value]="v.id">
+              {{ v.vehicleModel.make.makeName }} ({{ v.licensePlate }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Technician -->
+        <div class="form-group">
+          <label for="technician">Technician</label>
+           <select id="labor" class="form-select" formControlName="technicianId">
+            <option value="">-- Select Labor --</option>
+            <option *ngFor="let labor of labors" [value]="labor.laborId">
+              {{ labor.laborName }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Repair Tasks -->
+        <div class="form-group">
+          <label>Repair Tasks</label>
+          <div class="input-group">
+                  <select #taskSelect class="form-select">
+          <option value="">-- Select Task --</option>
+          <option *ngFor="let t of tasks" [value]="t.taskId">
+            {{ t.name }} ({{t.duration}} Minute)
+                  </option>
+          </select>
+          <button type="button" class="add-btn" (click)="addRepairTask(+taskSelect.value)">
+            Add
+          </button>
+          </div>
+
+
+<ul>
+  <li *ngFor="let rt of repairTasks.controls; let i = index">
+    {{ getTaskName(rt.value.repairTaskId) }}
+    <button type="button" (click)="removeRepairTask(i)">x</button>
+  </li>
+</ul>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()"><i class="bi bi-x-circle me-2"></i>Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="save()"><i class="bi bi-save2 me-2"></i>Save</button>
+    </div>
+  </div>
+</div>

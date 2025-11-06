@@ -1,0 +1,164 @@
+<div class="container dashboard-container">
+  <h1 class="dashboard-title">
+    Statistics for {{ date | date: 'MMMM d, y' }}
+  </h1>
+
+  <!-- 🔹 Orders Overview -->
+  <div class="stats-grid grid-5">
+    <div class="stat-card">
+      <i class="bi bi-list-ul icon-orders"></i>
+      <div class="card-content">
+        <span class="card-title">Total Orders</span>
+        <span class="card-value">{{ totalOrders }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card color-scheduled">
+      <i class="bi bi-hourglass-split" style="color: orange;"></i>
+      <div class="card-content">
+        <span class="card-title">Scheduled</span>
+        <span class="card-value">{{ pendingOrders }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card color-progress">
+      <i class="bi bi-gear" style="color: #00ffff;"></i>
+      <div class="card-content">
+        <span class="card-title">In Progress</span>
+        <span class="card-value">{{ inProgressOrders }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card color-completed">
+      <i class="bi bi-check-circle-fill" style="color: green;"></i>
+      <div class="card-content">
+        <span class="card-title">Completed</span>
+        <span class="card-value">{{ completedOrders }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card color-cancelled">
+      <i class="bi bi-x-circle-fill" style="color: red;"></i>
+      <div class="card-content">
+        <span class="card-title">Cancelled</span>
+        <span class="card-value">{{ cancelledOrders }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Revenue Section -->
+  <div class="stats-grid grid-4">
+    <div class="stat-card">
+      <i class="bi bi-currency-dollar icon-revenue"></i>
+      <div class="card-content">
+        <span class="card-title">Total Revenue</span>
+        <span class="card-value">${{ totalRevenue | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-wrench-adjustable icon-parts"></i>
+      <div class="card-content">
+        <span class="card-title">Total Parts Cost</span>
+        <span class="card-value">${{ totalPartsCost | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-person-fill-gear icon-labor"></i>
+      <div class="card-content">
+        <span class="card-title">Total Labor Cost</span>
+        <span class="card-value">${{ totalLaborCost | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-cash-stack icon-profit"></i>
+      <div class="card-content">
+        <span class="card-title">Net Profit</span>
+        <span class="card-value">${{ netProfit | number:'1.2-2' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Vehicles / Customers -->
+  <div class="stats-grid grid-3">
+    <div class="stat-card">
+      <i class="bi bi-car-front-fill icon-vehicles"></i>
+      <div class="card-content">
+        <span class="card-title">Unique Vehicles</span>
+        <span class="card-value">{{ totalVehicles }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-person-lines-fill icon-customers"></i>
+      <div class="card-content">
+        <span class="card-title">Unique Customers</span>
+        <span class="card-value">{{ totalCustomers }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-graph-up-arrow icon-margin"></i>
+      <div class="card-content">
+        <span class="card-title">Profit Margin</span>
+        <span class="card-value">{{ profitMargin | number:'1.2-2' }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Rates Section -->
+  <div class="stats-grid grid-3">
+    <div class="stat-card">
+      <i class="bi bi-clipboard-data icon-rate"></i>
+      <div class="card-content">
+        <span class="card-title">Completion Rate</span>
+        <span class="card-value">{{ completionRate | number:'1.2-2' }}%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-graph-down-arrow icon-avg"></i>
+      <div class="card-content">
+        <span class="card-title">Avg. Revenue/Order</span>
+        <span class="card-value">${{ avgRevenuePerOrder | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-ev-front icon-order-vehicle"></i>
+      <div class="card-content">
+        <span class="card-title">Orders Per Vehicle</span>
+        <span class="card-value">{{ ordersPerVehicle | number:'1.2-2' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Cost Ratios -->
+  <div class="stats-grid grid-3">
+    <div class="stat-card">
+      <i class="bi bi-pie-chart-fill icon-parts-ratio"></i>
+      <div class="card-content">
+        <span class="card-title">Parts Cost Ratio</span>
+        <span class="card-value">{{ partsCostRatio | number:'1.2-2' }}%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-person-badge icon-labor-ratio"></i>
+      <div class="card-content">
+        <span class="card-title">Labor Cost Ratio</span>
+        <span class="card-value">{{ laborCostRatio | number:'1.2-2' }}%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <i class="bi bi-x-octagon icon-cancel-rate"></i>
+      <div class="card-content">
+        <span class="card-title">Cancellation Rate</span>
+        <span class="card-value">{{ cancellationRate | number:'1.2-2' }}%</span>
+      </div>
+    </div>
+  </div>
+</div>

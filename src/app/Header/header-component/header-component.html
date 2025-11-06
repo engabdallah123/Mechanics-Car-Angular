@@ -1,0 +1,39 @@
+<header>
+       <div class="nav-bar container">
+         <div class="logo" routerLink="/home">
+            <img src="car-engine.png" alt="Mechanic Shop Logo">
+           <p> <span class="m">M</span><span class="e">e</span><span class="c">c</span><span class="h">h</span><span class="a">a</span><span class="n">n</span><span class="i">i</span><span class="c">c</span><span class="s">S</span><span class="h">h</span><span class="o">o</span><span class="p">P</span></p>
+        </div>
+        <div class="links" *ngIf="accountServices.IsLogged()">
+          <ul>
+            <li routerLinkActive="active">
+              <a routerLink="/customer"><i class="bi bi-people"></i><span>Customers</span></a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/task"><i class="bi bi-tools"></i><span>Services</span></a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/orders"><i class="bi bi-clock"></i><span>WorkOrder</span></a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/schedule"><i class="bi bi-card-checklist"></i><span>Schedules</span></a>
+            </li>
+          </ul>
+        </div>
+        <nav class="d-flex align-items-center">
+            <a routerLink="/login" class="login-link"  *ngIf="!accountServices.IsLogged()">
+                <i class="bi bi-unlock"></i>
+                <span>Login</span>
+            </a>
+            <div class="logout-link"  *ngIf="accountServices.IsLogged()">
+              <i class="bi bi-lock"></i>
+              <a routerLink="/dashboard">{{claims?.unique_name}}</a>
+              <a (click)=" Logout()" class="logout" style="cursor: pointer;">
+                <span class="out">Logout</span>
+             </a>
+            </div>
+
+        </nav>
+
+       </div>
+    </header>

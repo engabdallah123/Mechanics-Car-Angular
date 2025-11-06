@@ -1,0 +1,82 @@
+main {
+    padding: 3rem 1.5rem; /* 48px 24px */
+}
+
+.services-section {
+    margin: 0 auto; /* Center the section */
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 2.5rem; /* 40px */
+    font-weight: 700;
+    margin-bottom: 2.5rem; /* 40px */
+}
+
+/* --- Services Grid Layout --- */
+.services-grid {
+    display: grid;
+    /* Create 3 equal-width columns */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; /* 24px gap between cards */
+}
+
+/* --- Service Card Styles --- */
+.service-card {
+    background-color: #212529; /* Dark background for cards */
+    border: 1px solid #444; /* Subtle border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 2rem; /* 32px padding inside */
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    border-color: #f0f0f0; /* Highlight border on hover */
+}
+
+.service-card i {
+    font-size: 2.5rem; /* 40px icon size */
+    color: #e0e0e0; /* Light icon color */
+    margin-bottom: 1.25rem; /* 20px space below icon */
+}
+
+.service-card h3 {
+    font-size: 1.3rem; /* 21px heading size */
+    font-weight: 600;
+    margin-bottom: 0.75rem; /* 12px space below heading */
+}
+
+.service-card p {
+    font-size: 0.95rem; /* 15px */
+    color: #aaaaaa; /* Lighter gray for description */
+    line-height: 1.5;
+}
+
+/* --- Responsive Design (for tablets and mobile) --- */
+
+/* For tablets */
+@media (max-width: 992px) {
+    .services-grid {
+        /* Change to 2 columns */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For mobile phones */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .services-grid {
+        /* Stack to 1 column */
+        grid-template-columns: 1fr;
+    }
+
+    .services-section h2 {
+        font-size: 2rem; /* 32px */
+    }
+  }

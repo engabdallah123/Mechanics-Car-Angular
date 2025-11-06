@@ -1,0 +1,218 @@
+:host {
+  --bg-dark: #1e1f22;
+  --bg-light-dark: #2a2c30;
+  --text-light: #f5f5f5;
+  --text-muted: #adb5bd;
+  --primary-blue: #0d6efd; /* Bootstrap primary */
+  --success-green: #198754; /* Bootstrap success */
+  --info-cyan: #0dcaf0; /* Bootstrap info */
+
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.job-details-wrapper {
+  flex: 1;
+  overflow-y: auto; /* عشان لو المحتوى زاد يعمل scroll */
+  padding: 1.5rem;
+}
+
+/* Header Styling */
+.job-details-header {
+  border-bottom: 1px solid var(--bg-light-dark);
+  margin-bottom: 2rem;
+}
+
+.job-details-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-light);
+}
+
+.job-details-header .bi {
+  font-size: 2rem;
+  color: var(--primary-blue);
+}
+
+/* Card Styling */
+.job-details-card {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--bg-light-dark);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.job-details-card .card-header {
+  background-color: var(--bg-light-dark);
+  border-bottom: 1px solid var(--bg-light-dark);
+  padding: 1rem 1.5rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.job-details-card .card-header h5 {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.job-details-card .card-body {
+  padding: 1.5rem;
+}
+
+/* Vehicle Information (Left Panel) */
+.vehicle-info-body {
+  text-align: center;
+}
+
+.vehicle-icon-container {
+  width: 150px;
+  height: 150px;
+  background-color: var(--bg-light-dark);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.vehicle-icon {
+  font-size: 5rem;
+  color: var(--text-muted);
+}
+
+.vehicle-specs p {
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.vehicle-specs strong {
+  color: var(--text-light);
+}
+
+/* Workorder Information (Right Panel) */
+.workorder-summary {
+  display: flex;
+  flex-wrap: wrap; /* عشان ينزلوا سطر جديد لو المساحة ضاقت */
+  gap: 1rem; /* مسافة بين العناصر */
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--bg-light-dark);
+  margin-bottom: 1.5rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px; /* عشان يبقى فيه مساحة كافية للعنصر */
+}
+
+.summary-item label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.summary-item span {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+/* Repair Task Sections */
+.repair-task-section {
+  margin-bottom: 2rem;
+}
+
+.repair-task-section .task-header {
+  margin-bottom: 5px;
+  background-color: #2a2c30;
+  padding: 10px 15px;
+}
+
+.repair-task-section .task-header strong {
+  font-size: 1.1rem;
+  color: var(--text-light);
+}
+
+.repair-task-section .badge {
+  font-size: 0.85rem;
+  padding: 0.4em 0.7em;
+  border-radius: 4px;
+  margin-left: 20px;
+}
+.pending {
+  background-color: #ffc107; /* أصفر Bootstrap */
+  color: #000; /* نص أسود */
+}
+.complete {
+  background-color: #198754;
+  color: #fff;
+}
+.in-progress {
+  background-color: #0dcaf0;
+  color: #000;
+}
+
+
+/* Table Styling (Bootstrap dark tables used) */
+.table {
+  color: var(--text-light);
+  border-color: var(--bg-light-dark);
+
+}
+
+.table-dark thead th {
+  border-color: var(--bg-light-dark);
+  /* background-color: var(--bg-light-dark);
+  color: var(--text-light); */
+  background-color: white;
+  color: black;
+}
+
+.table-dark tbody tr {
+  background-color: var(--bg-dark); /* عشان تبقى خلفية الصفوف غامقة */
+}
+
+.table-dark tbody tr:nth-of-type(odd) {
+  background-color: var(--bg-light-dark); /* تدرج لون الصفوف */
+}
+
+.table-dark tbody td,
+.table-dark tbody th {
+  border-color: var(--bg-light-dark);
+}
+
+/* Totals Section */
+.totals-section {
+  border-top: 1px solid var(--bg-light-dark);
+  padding-top: 1.5rem;
+  margin-top: auto; /* بيخليها تحت خالص في الـ card body */
+}
+
+.totals-table {
+  width: 100%;
+}
+
+.totals-table td {
+  padding: 0.5rem 0;
+  border: none;
+  font-size: 1rem;
+}
+
+.totals-table td:first-child {
+  color: var(--text-muted);
+}
+
+.totals-table td:last-child {
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.grand-total-row td {
+  font-size: 1.25rem;
+  color: var(--primary-blue) !important; /* لون مميز للإجمالي النهائي */
+  font-weight: bold !important;
+}

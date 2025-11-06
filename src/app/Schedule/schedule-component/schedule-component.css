@@ -1,0 +1,283 @@
+:host {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1f22;
+  --border-color: #333;
+  --accent-color: #00bcd4;
+  --text-primary: #f5f5f5;
+  --text-secondary: #bdbdbd;
+  --slot-bg-available: #1b4d3e;
+  --slot-bg-unavailable: #3e3e3e;
+  --slot-bg-past: #2a2a2a;
+  --timeline-color: #ff5252;
+
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-primary);
+  display: block;
+  height: 100%;
+}
+
+/* --- Layout --- */
+.schedule-wrapper {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.schedule-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.schedule-date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* --- Table Container --- */
+.table-container {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  word-wrap: break-word;
+  vertical-align: top;
+  padding: 10px;
+  min-height: 70px;
+  height: 70px;
+  font-size: 0.85rem;
+}
+
+.schedule-table th {
+  background: var(--bg-secondary);
+  font-weight: 600;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  vertical-align: middle;
+}
+
+/* --- Time Cells --- */
+.time-header-cell {
+  position: sticky;
+  left: 0;
+  z-index: 15;
+  width: 150px;
+}
+
+.time-label-cell {
+  text-align: center;
+  background: var(--bg-secondary);
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+/* --- Slot styling --- */
+.slot-cell {
+  border-left: 3px solid transparent;
+  border-radius: 6px;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* الحالة 1 - متاح حالياً */
+.slot-cell.available {
+  background: var(--slot-bg-available, #1b5e20);
+  border-left-color: #00e676;
+  color: white;
+  cursor: pointer;
+}
+
+.slot-cell.available:hover {
+  transform: scale(1.02);
+  background: #236c57;
+}
+
+/* الحالة 2 - غير متاح حالياً */
+.slot-cell.unavailable {
+  background: var(--slot-bg-unavailable, #555);
+  border-left-color: #888;
+  color: #ccc;
+}
+
+/* لما تكون غير متاحة — الأيقونات فوق والنص تحت */
+.slot-cell.unavailable .slot-content {
+  display: flex;
+  flex-direction: column-reverse; /* يعكس الترتيب */
+  justify-content: space-between;
+}
+
+.slot-cell.unavailable .icons {
+  position: relative;
+  display: flex !important;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+.slot-cell.unavailable .text {
+  margin-top: 8px;
+}
+
+/* الحالة 3 - ماضي لكن كان متاح */
+.slot-cell.past-available {
+  background: linear-gradient(135deg, #388e3c, #1b5e20);
+  border-left-color: #81c784;
+  color: #b9f6ca;
+  opacity: 0.8;
+}
+
+/* الحالة 4 - ماضي وغير متاح */
+.slot-cell.past-unavailable {
+  background: linear-gradient(135deg, #3b3b3b, #1e1e1e);
+  border-left-color: #ff1744;
+  color: #aaa;
+  opacity: 0.7;
+  filter: grayscale(0.5);
+}
+
+/* --- النص داخل الخلية --- */
+.slot-time {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* --- Timeline --- */
+.timeline {
+  position: absolute;
+  left: 0;
+  margin-left: 150px;
+  right: 0;
+  height: 2px;
+  background: var(--timeline-color);
+  z-index: 20;
+}
+
+.timeline-time-label {
+  position: absolute;
+  left: -145px;
+  top: -16px;
+  background: var(--timeline-color);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* --- Modal --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(24, 24, 24, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* --- Icons --- */
+.slot-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* يخلي العناصر تتوزع فوق وتحت */
+  height: 100%; /* علشان ياخد طول الخلية بالكامل */
+  position: relative;
+}
+
+.icons-top {
+ display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px 6px;
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+  opacity: 0;
+  transition: 0.3s;
+}
+.slot-cell.unavailable:hover .icons-top {
+   opacity: 1;
+}
+.slot-cell.past-unavailable:hover .icons-top {
+   opacity: 1;
+}
+.icon-btn {
+  cursor: pointer;
+  color: #00bcd4;
+  font-size: 1.3rem;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  color: #00e5ff;
+  transform: scale(1.15);
+}
+
+.delete-icon {
+  color: #ff5252;
+}
+
+.delete-icon:hover {
+  color: #ff1744;
+}
+
+.info-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* --- التفاصيل (العربية + العامل) --- */
+.slot-info {
+  margin-top: auto; /* يزق التفاصيل لتحت */
+  text-align: center;
+  padding: 6px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.vehicle-info {
+  color: #ddd;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.labor-name {
+  color: #ffc107;
+  font-size: 1rem;
+}
+

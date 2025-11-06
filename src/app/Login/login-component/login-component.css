@@ -1,0 +1,173 @@
+/* login-component.css */
+
+/* This host style ensures the component takes up the full page */
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #212529; /* Dark background from image */
+  color: #ccc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 2rem;
+
+}
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  align-items: center;
+  gap: 4rem; /* Space between form and icon */
+  border: 1px solid #3a3a3a;
+  padding: 40px;
+}
+
+/* === Left Side: Form === */
+.form-container {
+  flex: 1.5; /* Give the form more space */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* Space between form groups */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #adb5bd; /* Light gray label text */
+}
+
+.form-group label .required {
+  color: #e63946; /* Red asterisk */
+}
+
+/* This is the key part for the icon inside the input */
+.input-icon-group {
+  position: relative;
+}
+
+.input-icon-group .icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888; /* Icon color */
+}
+
+.input-icon-group input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem; /* Left padding for the icon */
+  background-color: #2c3034; /* Dark input background */
+  border: 1px solid #495057; /* Gray border */
+  border-radius: 5px;
+  color: #f0f0f0; /* White input text */
+  font-size: 1rem;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-icon-group input::placeholder {
+  color: #888;
+}
+
+.input-icon-group input:focus {
+  outline: none;
+  border-color: #0d6efd; /* Blue border on focus */
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+/* === Options Row (Remember me / Forgot) === */
+.options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  color: #adb5bd;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.forgot-password {
+  color: #0d6efd; /* Blue link */
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* === Login Button === */
+.login-btn {
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  background-color: #0d6efd; /* Bright blue */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background-color: #0b5ed7; /* Darker blue on hover */
+}
+
+.login-btn:disabled {
+  background-color: #495057;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* === Right Side: Icon === */
+.icon-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-container .fas {
+  font-size: 12rem; /* Big icon */
+  color: #343a40; /* Muted, dark gray color */
+}
+
+/* === Error & Validation Styling === */
+.validation-error small {
+  color: #e63946; /* Red for validation text */
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.input-icon-group input.is-invalid {
+  border-color: #e63946;
+}
+
+.login-error-message {
+  color: #e63946;
+  background-color: rgba(230, 57, 70, 0.1);
+  border: 1px solid #e63946;
+  padding: 0.8rem;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 0.5rem;
+}

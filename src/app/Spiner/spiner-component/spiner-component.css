@@ -1,0 +1,44 @@
+.circle {
+    display: block;
+    border-style: solid solid dotted dotted;
+    border-width: 4px;
+    border-color: #0075ff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 40px auto;
+    animation: move-left 2s linear infinite;
+    position: relative;
+}
+.circle::before {
+   content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-width: 4px;
+    border-style: solid dotted;
+    border-color: #009688;;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-top: -22px;
+    margin-left: -22px;
+    animation: move-right 1s linear infinite;
+}
+@keyframes  move-left {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes move-right {
+      from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+
+}

@@ -1,0 +1,81 @@
+<div class="app-container">
+  <div class="form-card">
+    <!-- Header -->
+    <div class="form-header">
+      <h2 class="form-title">Edit Customer</h2>
+      <button type="button" class="close-btn" (click)="cancel()">✖</button>
+    </div>
+
+    <form [formGroup]="editCustomer" (ngSubmit)="submit()">
+      <!-- Customer Info -->
+      <div class="customer-info-grid">
+        <div class="form-group grid-span-2">
+          <label>Customer Name *</label>
+          <input formControlName="customerName" placeholder="Customer Name" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input formControlName="phone" placeholder="0123456789" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" formControlName="email" placeholder="example@email.com" class="form-control" />
+        </div>
+      </div>
+
+      <!-- Old Vehicles (Display Only) -->
+      <div class="vehicles-section" *ngIf="oldVehicles.length">
+        <h3>Existing Vehicles</h3>
+        <ul class="old-vehicles-list">
+          <li *ngFor="let vehicle of oldVehicles; let i = index">
+            {{ vehicle.vehicleModel?.make?.makeName }} - {{ vehicle.vehicleModel?.name }} - {{ vehicle.licensePlate }}
+            <button type="button" (click)="removeOldVehicle(i)">Delete</button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Add New Vehicles -->
+      <div class="vehicles-section">
+        <div class="vehicles-header">
+          <h3>Add New Vehicles</h3>
+          <button type="button" (click)="addVehicle()" class="btn btn-add">+ Add Vehicle</button>
+        </div>
+
+        <div formArrayName="vehicles" class="vehicles-list">
+          <div *ngFor="let vehicle of vehicles.controls; let i = index" [formGroupName]="i" class="vehicle-item">
+            <div class="vehicle-grid">
+              <div class="form-group">
+                <label>Make</label>
+                <select formControlName="makeId" (change)="onMakeChange(i)" class="form-select">
+                  <option [ngValue]="null">-- Select Make --</option>
+                  <option *ngFor="let make of makes" [ngValue]="make.makeId">{{ make.makeName }}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Model</label>
+                <select formControlName="modelId" class="form-select">
+                  <option [ngValue]="null">-- Select Model --</option>
+                  <option *ngFor="let model of getVehicleModels(i)" [ngValue]="model.modelId">
+                    {{ model.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>License Plate</label>
+                <input formControlName="licensePlate" placeholder="ABC-123" class="form-control" />
+              </div>
+            </div>
+            <button type="button" (click)="removeVehicle(i)" class="btn-remove-vehicle">🗑 Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="cancel()" class="btn btn-cancel">Cancel</button>
+        <button type="submit" class="btn btn-submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>

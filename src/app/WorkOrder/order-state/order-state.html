@@ -1,0 +1,54 @@
+<div class="status-modal">
+  <div class="header">
+    <h2 class="dialog-title">Update Workorder State</h2>
+    <button class="close-btn" (click)="close(false)">×</button>
+  </div>
+
+  <div class="order-info">
+    <div><span class="label">🧾 Workorder:</span> WO-{{ workOrder?.orderId }}</div>
+    <div>
+      <span class="label">⏰ Time:</span>
+      {{formatTime(workOrder?.startTime)}} → {{formatTime(workOrder?.endTime)}}
+    </div>
+    <div>
+      <span class="label">🚗 Vehicle:</span>
+      {{ workOrder?.vehicle?.vehicleModel?.make?.makeName }} | {{ workOrder?.vehicle?.licensePlate }}
+    </div>
+    <div><span class="label">👷 Labor:</span> {{ workOrder?.technicianName }}</div>
+  </div>
+
+  <div class="stepper-wrapper-horizontal">
+    <ul class="stepper">
+      <li
+        *ngFor="let step of steps;let i = index"
+        class="step"
+         [class.active]="i === currentStep"
+         [class.completed]="i < currentStep"
+        (click)="goToStep(i)"
+        [class.disabled]="i < currentStep"
+        (click)="setState(step)"
+      >
+        <div class="step-circle">
+         <span *ngIf="i < currentStep" class="icon-check">✔</span>
+        <span *ngIf="i >= currentStep">{{ i + 1 }}</span>
+      </div>
+        <div class="step-title">{{ step }}</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancel()">
+      <i class="bi bi-x-circle me-2"></i>Cancel
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="currentState !== 'Completed'"
+      (click)="save()"
+    >
+      <i class="bi bi-save2 me-2"></i>Save
+    </button>
+  </div>
+</div>

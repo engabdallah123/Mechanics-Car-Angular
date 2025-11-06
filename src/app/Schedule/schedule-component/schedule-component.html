@@ -1,0 +1,133 @@
+<div class="schedule-wrapper">
+  <header class="schedule-header">
+    <div class="header-left d-flex align-items-center">
+      <i class="bi bi-calendar-range me-2"></i>
+      <h2>Daily Schedule</h2>
+    </div>
+    <div class="header-right">
+      <span class="schedule-date">{{ date | date: 'fullDate' }}</span>
+    </div>
+  </header>
+
+  <div class="table-container">
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th class="time-header-cell">Time</th>
+          <th style="font-size: 30px;"
+              *ngFor="let station of scheduleDay?.stations"
+              [ngStyle]="{'color': getStationColor(station.name)}">
+            {{ station.name }}
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let slot of scheduleDay?.stations?.[0]?.slots; let i = index">
+          <td *ngIf="!slot.skipRender"
+              class="time-label-cell"
+              [attr.rowspan]="slot.blockedDuration || 1"
+              [class.past]="slot.inPast">
+             {{formatTime(slot.startTime, scheduleDay?.date)}}
+          </td>
+
+          <ng-container *ngFor="let station of scheduleDay?.stations">
+            <td *ngIf="!station.slots[i]?.skipRender"
+                class="slot-cell"
+                style="position: relative; transition: 0.3s;"
+                [ngClass]="{
+                  'available': !station.slots[i]?.inPast && station.slots[i]?.isAvailable,
+                  'unavailable': !station.slots[i]?.inPast && !station.slots[i]?.isAvailable,
+                  'past-available': station.slots[i]?.inPast && station.slots[i]?.isAvailable,
+                  'past-unavailable': station.slots[i]?.inPast && !station.slots[i]?.isAvailable
+                }"
+                [attr.rowspan]="station.slots[i]?.blockedDuration || 1"
+                (click)="openAddWorkOrder(station.slots[i], station)">
+
+              <div class="slot-content">
+                <div class="slot-time available-time">
+                    {{ formatTime(station.slots[i]?.startTime, scheduleDay?.date) }} →
+                    {{ formatTime(station.slots[i]?.endTime, scheduleDay?.date) }}
+                  </div>
+                <!-- icons top -->
+                <div class="icons-top" *ngIf="station.slots[i]?.workOrderDTO">
+                  <i class="bi bi-activity icon-btn"
+                     *ngIf="station.slots[i]?.workOrderDTO?.orderId"
+                     (click)="openWorkOrderState(station.slots[i]?.workOrderDTO!)"
+                     title="View Status"></i>
+
+                  <i class="bi bi-info-circle icon-btn"
+                     *ngIf="station.slots[i]?.workOrderDTO?.orderId"
+                     (click)="orderDetails(station.slots[i]?.workOrderDTO?.orderId)"
+                     title="View Details"></i>
+
+                  <ng-container *ngIf="!station.slots[i]?.inPast">
+                    <i class="bi bi-person-arms-up icon-btn"
+                       (click)="openReassignLabor(station.slots[i]?.workOrderDTO!)"
+                       title="Assign"></i>
+                    <i class="bi bi-screwdriver icon-btn"
+                       (click)="openAddTasksModal(station.slots[i]?.workOrderDTO!)"
+                       title="Work Tools"></i>
+                    <i class="bi bi-trash3 icon-btn delete-icon"
+                       *ngIf="station.slots[i]?.workOrderDTO?.orderId"
+                       (click)="deleteOrder(station.slots[i]?.workOrderDTO?.orderId)"
+                       title="Delete Order"></i>
+                  </ng-container>
+                </div>
+
+                <!-- info -->
+                <div class="slot-info">
+
+
+                  <div *ngIf="station.slots[i]?.workOrderDTO" class="info-box">
+                    <div class="vehicle-info">
+                      <span>{{ station.slots[i]?.workOrderDTO?.vehicle?.vehicleModel?.make?.makeName }}</span> |
+                      <span>{{ station.slots[i]?.workOrderDTO?.vehicle?.licensePlate }}</span>
+                    </div>
+                    <div class="labor-name">
+                      <strong>{{ station.slots[i]?.workOrderDTO?.technicianName }}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modals -->
+<div *ngIf="showAddOrderForm" class="modal-overlay">
+  <app-work-order-component
+    [slotId]="selectedSlotId"
+    [stactionId]="selectedStationId"
+    [slot]="clickedSlot"
+    [station]="clickedStation"
+    (closeForm)="closeAddWorkOrder($event)">
+  </app-work-order-component>
+</div>
+
+<div *ngIf="showStatusModal" class="modal-overlay">
+  <app-order-state
+    [orderId]="selectedOrderId"
+    (closeState)="closeWorkOrderState($event)">
+  </app-order-state>
+</div>
+
+<app-reassign-labor
+  *ngIf="showReassignModal"
+  [workOrder]="selectedWorkOrder"
+  [labors]="availableLabors"
+  (closeModal)="showReassignModal = false"
+  (confirmReassign)="onReassignLabor($event)">
+</app-reassign-labor>
+
+<app-extra-task
+  *ngIf="showAddTasksModal"
+  [workOrder]="selectedWorkOrder"
+  [tasks]="availableTasks"
+  (closeModal)="closeAddTasksModal()"
+  (tasksAdded)="onTasksAdded()">
+</app-extra-task>

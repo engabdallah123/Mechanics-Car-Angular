@@ -1,0 +1,77 @@
+<div class="container" style="margin-top: 20px;">
+  <div class="header-controls">
+  <h2 class="page-title"><i class="bi bi-receipt me-2"></i>Invoice Summary</h2>
+  <button *ngIf="invoice.isPaid" class="btn btn-outline-primary" (click)="downloadPDF(invoice.id)">
+    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+  </button>
+  <button *ngIf="!invoice.isPaid" class="btn btn-success" (click) = "settleInvoice()">
+    <i class="bi bi-cash-coin"></i> Settle Invoice
+  </button>
+</div>
+
+<div class="container invoice-container" *ngIf="invoice">
+  <div class="invoice-header">
+    <div>
+      <h4>Invoice #: {{ invoice.invoiceNumber }}</h4>
+      <p>Customer #: {{ invoice.customerName }}</p>
+    </div>
+    <div class="header-right">
+      <p>Date Issued: {{ invoice.dateIssued | date: 'yyyy-MM-dd HH:mm' }}</p>
+      <p>
+        Status:
+        <span class="status" [class.paid]="invoice.isPaid" [class.unpaid]="!invoice.isPaid">
+          {{ invoice.isPaid ? 'Paid' : 'Unpaid' }}
+        </span>
+      </p>
+      </div>
+  </div>
+
+  <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of invoice.tasks; let i = index">
+        <td>
+          <strong>{{ i + 1 }}: {{ task.name }}</strong><br />
+          Labor = {{ task.laborCost | currency:'£' }}<br />
+          <div *ngIf="task.parts && task.parts.length > 0">
+            Parts:
+            <div *ngFor="let part of task.parts" class="part-line">
+              • {{ part.name }} x{{ part.quantity }} @ {{ part.unitPrice | currency:'£' }}
+            </div>
+          </div>
+        </td>
+        <td>1</td>
+        <td>{{ task.totalCost | currency:'£' }}</td>
+        <td>{{ task.totalCost | currency:'£' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="invoice-summary">
+    <div class="summary-line">
+      <span>Subtotal</span>
+      <span>{{ invoice.subtotal | currency:'£' }}</span>
+    </div>
+    <div class="summary-line">
+      <span>Discount</span>
+      <span  class="text-danger">-{{ invoice.discount | currency:'£' }}</span>
+    </div>
+    <div class="summary-line">
+      <span>Tax</span>
+      <span>{{ invoice.tax | currency:'£' }}</span>
+    </div>
+    <div class="summary-line total-line">
+      <strong>Total</strong>
+      <strong>{{ invoice.total | currency:'£' }}</strong>
+    </div>
+  </div>
+</div>
+
+</div>

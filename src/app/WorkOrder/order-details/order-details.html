@@ -1,0 +1,117 @@
+<div class="container">
+  <header class="job-details-header">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-file-earmark-text-fill me-2"></i><h1>Job Details</h1>
+    </div>
+  </header>
+
+<div class="job-details-content-area">
+    <div class="row g-4">
+         <div style="margin-top: 0;" class="col-lg-4">
+        <div class="card job-details-card h-100">
+          <div class="card-header">
+            <h5>Vehicle Information</h5>
+          </div>
+          <div class="card-body vehicle-info-body d-flex flex-column align-items-center justify-content-center">
+            <div class="vehicle-icon-container">
+              <i class="bi bi-car-front-fill vehicle-icon"></i> <!-- أيقونة عربية كبيرة --></div>
+
+            <div class="vehicle-specs text-center mt-3" *ngIf="workOrder">
+              <p>Make: <strong>{{workOrder.vehicle.vehicleModel.make.makeName}}</strong></p>
+              <p>Model: <strong>{{workOrder.vehicle.vehicleModel.name}}</strong></p>
+              <p>Year: <strong>{{workOrder.vehicle.vehicleModel.year.nameYear}}</strong></p>
+              <p>Plate: <strong>{{workOrder.vehicle.licensePlate}}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 0;" class="col-lg-8">
+        <div class="card job-details-card h-100">
+          <div class="card-header">
+            <h5>Workorder Information</h5>
+          </div>
+          <div class="card-body workorder-info-body">
+            <div class="workorder-summary">
+              <div class="summary-item">
+                <label>Job ID</label>
+                <span>{{workOrder?.code}}</span>
+              </div>
+              <div class="summary-item">
+                <label>Scheduled</label>
+                <span>{{workOrder?.scheduled | date: 'longDate'}}</span>
+              </div>
+              <div class="summary-item">
+                <label>Duration</label>
+                <span>{{ (workOrder?.duration ?? 0) | formatDuration }}</span>
+              </div>
+              <div class="summary-item">
+                <label>Labor</label>
+                <span>{{workOrder?.technicianName}}</span>
+              </div>
+              <div class="summary-item">
+                <label>Status</label>
+    <span class="badge"
+                  [ngClass]="{
+                    'pending': workOrder?.status?.toString() === 'Pending',
+                    'complete': workOrder?.status?.toString() === 'Completed',
+                    'in-progress': workOrder?.status?.toString() === 'InProgress'
+                }">
+             {{ workOrder?.status }}
+         </span>
+              </div>
+            </div>
+
+            <div class="repair-task-section mt-4" *ngFor="let task of workOrder?.repairTasks">
+              <div class="task-header d-flex align-items-center">
+                <strong>{{task.name}}</strong>
+                <span class="badge bg-primary">Labor: ${{task.laborCost}}</span>
+              </div>
+              <table class="table table-dark table-striped mt-2" style=" max-width: 700px;
+  margin: auto;">
+                <thead>
+                  <tr>
+                    <th>Part</th>
+                    <th>Unit Cost</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let part of task.parts">
+                    <td>{{part.name}}</td>
+                    <td>${{part.unitPrice}}</td>
+                    <td>{{part.quantity}}</td>
+                    <td>${{part.unitPrice}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+           <div class="totals-section mt-4">
+              <table class="table table-borderless table-dark totals-table">
+                <tbody>
+                  <tr>
+                    <td><strong>Total Labor:</strong></td>
+                    <td class="text-end">${{workOrder?.repairTasks?.[0]?.totalCost}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total Parts:</strong></td>
+                    <td class="text-end">${{workOrder?.repairTasks?.[0]?.totalCost}}</td>
+                  </tr>
+                  <tr class="grand-total-row">
+                    <td><strong>Grand Total:</strong></td>
+                    <td class="text-end"><strong>${{workOrder?.grandTotal}}</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

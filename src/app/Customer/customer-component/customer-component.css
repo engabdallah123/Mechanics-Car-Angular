@@ -1,0 +1,262 @@
+/* ✅ يغطي الصفحة بالكامل */
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(24, 24, 24, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* 🧾 تصميم الكارد اللي فيه الفورم */
+.modal-wrapper app-add-customer {
+  background-color: #1e1e1e;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 700px;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+/* ✨ حركة بسيطة عند الظهور */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-content {
+    max-width: 1400px; /* Adjust as needed */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Header Section --- */
+.page-title h1 {
+    font-size: 1.8rem; /* Adjust title size */
+    color: #f0f0f0;
+    font-weight: 600;
+}
+
+.page-title p {
+    font-size: 0.9rem;
+    color: #aaaaaa !important; /* Override Bootstrap's text-muted to be lighter */
+}
+
+.new-customer-btn {
+    background-color: #007bff; /* Primary blue button */
+    border-color: #007bff;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+}
+
+.new-customer-btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* --- Filter and Sort Section --- */
+.search-input-group .input-group-text,
+.search-input-group .form-control {
+    background-color: #212529;
+    border: 1px solid #444;
+    color: #f0f0f0;
+    border-radius: 8px; /* Slightly rounded corners */
+}
+
+.search-input-group .input-group-text {
+    border-right: none;
+    color: #aaaaaa;
+    padding-left: 1.2rem;
+    padding-right: 0.5rem;
+}
+
+.search-input-group .form-control {
+    border-left: none;
+    padding-left: 0.5rem;
+}
+
+.search-input-group .form-control::placeholder {
+    color: #888;
+}
+
+/* Focus style */
+.search-input-group .form-control:focus {
+    background-color: #212529;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.1);
+}
+
+.custom-select {
+    background-color: #212529;
+    border: 1px solid #444;
+    color: #f0f0f0;
+    border-radius: 8px;
+    /* Remove default arrow in some browsers and add custom */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f0f0f0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+.custom-select:focus {
+    background-color: #212529;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.1);
+}
+
+.filter-buttons .btn-secondary {
+    background-color: #212529;
+    border-color: #444;
+    color: #aaaaaa;
+    
+}
+
+.filter-buttons .btn-secondary:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.filter-buttons .btn-secondary:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.filter-buttons .btn-secondary.active,
+.filter-buttons .btn-secondary:hover {
+    background-color: #7d8084;
+    border-color: #7d8084;
+    color: #ffffff;
+}
+
+/* --- Customer Cards Grid --- */
+.customer-card {
+    background-color: #383d42; /* Card background */
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 1.5rem; /* 24px */
+    height: 100%; /* Ensure cards are same height in a row */
+}
+
+.customer-card h5 {
+    font-size: 1.15rem; /* 18px */
+    font-weight: 600;
+    color: #f0f0f0;
+}
+
+.customer-card .btn-icon-only {
+    background: none;
+    border: none;
+    color: #aaaaaa;
+    padding: 0.2rem 0.5rem;
+    font-size: 1.1rem;
+}
+
+.customer-card .btn-icon-only:hover {
+    color: #f0f0f0;
+    background-color: #444;
+    border-radius: 5px;
+}
+
+.customer-info {
+    font-size: 0.9rem;
+    color: #aaaaaa;
+    margin-bottom: 0.5rem;
+}
+
+.customer-info i {
+    color: #888;
+}
+
+.vehicle-count {
+    background-color: #555 !important; /* Override Bootstrap's secondary badge color */
+    color: #f0f0f0 !important;
+    font-size: 0.75rem;
+    padding: 0.3em 0.6em;
+}
+
+.vehicle-list {
+    margin-top: 1rem;
+}
+
+.vehicle-list li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #aaaaaa;
+    margin-bottom: 0.4rem;
+}
+
+.vehicle-list li:last-child {
+    margin-bottom: 0;
+}
+
+.vehicle-plate {
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+    .new-customer-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.9rem;
+    }
+    .filter-buttons {
+        width: 100%;
+        justify-content: space-between; /* Make buttons spread out */
+    }
+    .filter-buttons .btn {
+        flex: 1; /* Make buttons take equal width */
+    }
+}
+
+@media (max-width: 576px) {
+    .page-content {
+        padding: 1rem;
+    }
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .new-customer-btn {
+        width: 100%;
+    }
+}
+/* dropdown-menu */
+.dropdown-menu {
+  background-color: #2c2c2c !important; 
+  border: 1px solid #444; 
+  color: #fff; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.dropdown-menu .dropdown-item {
+  color: #fff;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #444; /* عند hover */
+}
+
+.dropdown-menu .dropdown-item:active {
+  background-color: #2c2c2c !important; /* لما تضغط، ما يطلعش لون */
+}

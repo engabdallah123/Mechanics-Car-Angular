@@ -1,0 +1,103 @@
+<div class="container dashboard-container">
+  <h4><i class="bi bi-window-desktop me-2"></i>Appointments</h4>
+
+  <div class="filter-bar">
+    <input type="search" placeholder="Search..." [(ngModel)]="searchText" />
+
+    <select [(ngModel)]="statusFilter" (change)="applyFilters()">
+      <option value="">All Status</option>
+      <option value="Pending">Pending</option>
+      <option value="InProgress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+
+    <input type="date" [(ngModel)]="fromDate" />
+    <input type="date" [(ngModel)]="toDate" />
+
+    <button class="btn btn-filter" (click)="applyFilters()">Filter</button>
+    <button class="btn btn-reset" (click)="resetFilters()">Reset</button>
+  </div>
+
+  <table class="table table-striped table-hover table-dark appointments-table">
+    <thead>
+      <tr class="table-light">
+        <th>Vehicle</th>
+        <th>Customer</th>
+        <th>Spot</th>
+        <th>Labor</th>
+        <th>Repair Tasks</th>
+        <th>Status</th>
+        <th>Time Slot</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let order of filteredOrders">
+        <td>
+          {{ order.vehicle.vehicleModel.make.makeName }} |
+          {{ order.vehicle.vehicleModel.name }} |
+          {{ order.vehicle.vehicleModel.year.nameYear }} |
+          {{ order.vehicle.licensePlate }}
+        </td>
+        <td>{{ order.vehicle.customerName }}</td>
+        <td>{{ order.workStationName }}</td>
+        <td>{{ order.technicianName }}</td>
+        <td>
+          <span
+            *ngFor="let task of order.repairTasks"
+            class="pill"
+            [ngClass]="getTaskClass(task.name)"
+            >{{ task.name }}</span
+          >
+        </td>
+        <td>
+          <span
+            class="pill"
+            [ngClass]="{
+              'status-scheduled': order.status.toString() === 'Pending',
+              'status-completed': order.status.toString() === 'Completed',
+              'status-inprogress': order.status.toString() === 'InProgress'
+            }"
+            >{{ order.status }}</span
+          >
+        </td>
+        <td>
+          <div class="time-slot">
+            <span class="date">{{ order.scheduled | date: 'shortDate' }}</span>
+            <div class="d-flex align-items-center">
+              <span class="time-range">{{ formatTime(order.startTime) }}</span>
+              <i class="bi bi-arrow-right"></i>
+              <span class="time-range">{{ formatTime(order.endTime) }}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <button
+            (click)="orderDetails(order.orderId)"
+            class="btn-action"
+            title="order details"
+          >
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <button
+            *ngIf="order.status?.toString() === 'Completed' && !order.invoice"
+            class="btn-action"
+            title="create invoice"
+             (click)="createInvoice(order.orderId)"
+          >
+            <i class="bi bi-plus-circle"></i>
+          </button>
+          <button
+            *ngIf="order.invoice && order.invoice.invoiceId"
+            class="btn-action"
+            title="show invoice"
+            (click)="showInvoice(order.invoice.invoiceId)"
+          >
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

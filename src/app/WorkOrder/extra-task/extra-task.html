@@ -1,0 +1,47 @@
+<div class="modal-backdrop">
+  <div class="modal-container">
+
+    <div class="modal-header">
+      <h2>Add Tasks</h2>
+      <button class="close-btn" (click)="close()">&times;</button>
+    </div>
+
+    <div class="info-bar">
+      <span><i class="bi bi-hash"></i> <strong>Workorder:</strong> {{ workOrder.orderId }}</span>
+      <span>🚗 <strong>Vehicle: </strong> {{ workOrder.vehicle?.vehicleModel?.make?.makeName }} | {{ workOrder.vehicle?.licensePlate }}</span>
+      <span>⏰ <strong>Duration: </strong> {{workOrder.duration | formatDuration}}</span>
+      <span>👷 <strong>Labor: </strong> {{ workOrder.technicianName }}</span>
+    </div>
+
+    <div class="tasks-grid">
+      <div
+        *ngFor="let task of tasks"
+        class="task-card"
+        [class.selected]="selectedTaskIds.includes(task.taskId)"
+        (click)="toggleTaskSelection(task.taskId)"
+      >
+        <div class="card-header">
+          <span>{{ task.name }}</span>
+          <i class="bi bi-gear task-icon"></i>
+        </div>
+        <div class="card-details">
+          <span>Min: {{ task.duration }} mins</span>
+          <span>|</span>
+          <span>{{task.totalCost | currency}}</span>
+          <span>|</span>
+          <span>Parts: {{ task.parts.length}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="close()">
+        <i class="bi bi-x-circle me-2"></i>Cancel
+      </button>
+      <button class="btn btn-primary" (click)="save()" [disabled]="!selectedTaskIds.length">
+        <i class="bi bi-save2 me-2"></i>Save
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,180 @@
+<div class="container" style="margin-top: 50px; margin-bottom: 40px;">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="page-title">
+      <h1 class="mb-1"><i class="bi bi-tools me-2"></i>Repair Tasks</h1>
+      <p class="text-muted mb-0">Manage Repair Task and track costs</p>
+    </div>
+
+    <button class="btn btn-primary new-customer-btn" (click)="openAddTask()">
+      <i class="bi bi-plus-lg me-2"></i>New Task
+    </button>
+  </div>
+
+  <!-- 🔍 Search + Sort -->
+  <div
+    class="mb-4 d-flex align-items-center flex-wrap"
+    style="padding: 13px 10px; border: 1px solid #555353; border-radius: 8px;"
+  >
+    <!-- Search -->
+    <div class="col-md-5 mb-3 mb-md-0" style="width: 50%;">
+      <div class="input-group search-input-group">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search repair tasks..."
+          [(ngModel)]="searchText"
+          (input)="applyFilters()"
+        />
+      </div>
+    </div>
+
+    <!-- Sort dropdown -->
+    <div class="col-md-3 mb-3 mb-md-0" style="margin: 0 15px;">
+      <select
+        class="form-select custom-select"
+        [(ngModel)]="sortBy"
+        (change)="applyFilters()"
+      >
+        <option value="name">Sort by Name</option>
+        <option value="total">Sort by Total Cost</option>
+        <option value="duration">Sort by Duration</option>
+      </select>
+    </div>
+
+    <!-- Sort direction -->
+    <div class="btn-group filter-buttons flex-grow-1" role="group">
+      <button
+        type="button"
+        class="btn btn-secondary w-50"
+        [class.active]="sortDirection === 'asc'"
+        (click)="setSortDirection('asc')"
+      >
+        <i class="bi bi-sort-up"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary w-50"
+        [class.active]="sortDirection === 'desc'"
+        (click)="setSortDirection('desc')"
+      >
+        <i class="bi bi-sort-down"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loadingServices.isLoading | async" class="text-center my-5">
+    <app-spiner-component></app-spiner-component>
+  </div>
+
+  <!-- Tasks Grid -->
+  <div
+    *ngIf="!(loadingServices.isLoading | async) && tasks && tasks.length > 0"
+    class="row customer-cards-grid g-3"
+  >
+    @for (task of filteredTasks; track $index) {
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="task-card">
+        <!-- Card Header -->
+        <div
+          class="d-flex justify-content-between align-items-center mb-2 position-relative"
+        >
+          <h5 class="mb-0">{{ task.name }}</h5>
+
+          <button
+            class="btn btn-sm btn-icon-only"
+            type="button"
+            (click)="toggleMenu($index); $event.stopPropagation()"
+          >
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <ul
+            class="dropdown-menu dropdown-menu-end show"
+            *ngIf="activeMenuIndex === $index"
+          >
+            <li>
+              <button
+                class="dropdown-item d-flex align-items-center"
+                (click)="editTask(task)"
+              >
+                <i class="bi bi-pencil-square me-2"></i>Edit
+              </button>
+            </li>
+            <li>
+              <button
+                class="dropdown-item d-flex align-items-center text-danger"
+                (click)="deleteTask(task.taskId)"
+              >
+                <i class="bi bi-trash3 me-2"></i>Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Duration -->
+        <p class="task-duration">
+          <i class="bi bi-clock me-2"></i>{{ task.duration | formatDuration }}
+        </p>
+
+        <!-- Costs -->
+        <div class="costs-section">
+          <div class="cost-item">
+            <h6>Labor Cost</h6>
+            <p class="cost-labor">{{ task.laborCost | currency }}</p>
+          </div>
+          <div class="cost-item text-end">
+            <h6>Total Cost</h6>
+            <p class="cost-total">{{ task.totalCost | currency }}</p>
+          </div>
+        </div>
+
+        <!-- Parts Header -->
+        <div class="d-flex justify-content-between align-items-center parts-header">
+          <small>Parts ({{ task.parts?.length || 0 }})</small>
+          <span class="badge rounded-pill">
+            {{ getTotalPartsCost(task.parts) | currency }}
+          </span>
+        </div>
+
+        <!-- Parts List -->
+        <ul class="list-unstyled parts-list mb-0">
+          @for (part of task.parts; track $index) {
+          <li>
+            <span>{{ part.name }}</span>
+            <span class="part-qty-cost">
+              {{ part.quantity }} × {{ part.unitPrice | currency }}
+            </span>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div
+    *ngIf="!(loadingServices.isLoading | async) && tasks && tasks.length === 0"
+    class="alert alert-info text-center"
+  >
+    No repair tasks available.
+  </div>
+</div>
+
+<!-- Add Task Modal -->
+<app-add-task
+  *ngIf="showAddForm"
+  class="modal-wrapper"
+  (closeForm)="closeAddTask($event)"
+></app-add-task>
+
+<!-- Edit Task Modal -->
+<app-edit-task
+  *ngIf="showEditForm"
+  class="modal-wrapper"
+  [taskId]="selectedTaskId"
+  (closeForm)="closeEditTask($event)"
+></app-edit-task>

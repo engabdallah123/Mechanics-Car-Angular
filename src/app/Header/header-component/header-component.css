@@ -1,0 +1,105 @@
+header {
+    padding: 7px 40px;
+    background-color: #021702; /* Slightly lighter dark for header */
+    border-bottom: 1px solid #333;
+    max-width: 100%; 
+}
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* 8px */
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    cursor: pointer; 
+}
+
+.logo img {
+   
+    width: 60px;
+}
+
+.login-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* 8px */
+    font-size: 1rem; /* 16px */
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.login-link:hover {
+    background-color:#0c2e0c;
+}
+.links ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 0;
+
+}
+.links ul span {
+  display: block;
+  
+}
+.links ul li {
+  margin: 0 15px;
+   padding: 6px 10px;
+}
+.links ul .active {
+  border-bottom: 2px solid #fff;
+}
+span {
+  margin-right: 5px;
+}
+p {
+  cursor: pointer;
+  font-size: 19px;
+  margin-bottom: 0;
+}
+.e {
+color: yellow;
+}
+.c {
+color: green;
+}
+.h {
+color:chocolate
+}
+.a {
+color: burlywood;
+}
+.n {
+color: lightseagreen;
+}
+.i {
+color: fuchsia;
+}
+.c {
+color: mediumvioletred;
+}
+.o {
+color: red;
+}
+.p {
+color: forestgreen;
+}
+.logout-link {
+padding: 5px 15px;
+    border: 2px solid #233623;
+    border-radius: 10px;
+}
+.logout-link i {
+    margin-right: 21px;
+}
+.logout-link .logout {
+    margin-left: 15px;
+}
+
+

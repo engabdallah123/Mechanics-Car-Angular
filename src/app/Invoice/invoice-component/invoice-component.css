@@ -1,0 +1,133 @@
+/* --- إضافات للتحكم بالعنوان وزر التحميل --- */
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px
+}
+
+.page-title {
+  color: #f1f1f1;
+}
+
+/* --- التصميم الأساسي للحاوية --- */
+.invoice-container {
+  background-color: #27272c;
+  color: #f1f1f1; /* لون الخط الفاتح */
+  padding: 2rem;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  margin: auto;
+}
+
+/* --- تنسيق الهيدر --- */
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #444;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.invoice-header h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.invoice-header p {
+  margin: 0.25rem 0;
+  color: #c7c7c7; /* لون خط أفتح قليلاً */
+  font-size: 0.9rem;
+}
+
+.header-right {
+  text-align: right;
+}
+
+/* --- تنسيق حالة الفاتورة (Paid) --- */
+.status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.status.paid {
+  background-color: #0c942e;
+  color: #ffffff;
+}
+
+.status.unpaid {
+  background-color: #9e241d;
+  color: #ffffff;
+}
+
+/* --- تنسيق الجدول --- */
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.invoice-table th,
+.invoice-table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.invoice-table th {
+  color: #c7c7c7;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #444;
+}
+
+.invoice-table td {
+  border-bottom: 1px solid #444;
+  font-size: 0.9rem;
+}
+
+/* محاذاة الأعمدة الرقمية لليمين */
+.invoice-table th:nth-child(2),
+.invoice-table td:nth-child(2),
+.invoice-table th:nth-child(3),
+.invoice-table td:nth-child(3),
+.invoice-table th:nth-child(4),
+.invoice-table td:nth-child(4) {
+  text-align: right;
+}
+
+.part-line {
+  font-size: 0.85rem;
+  color: #c7c7c7;
+  margin-left: 1rem;
+}
+
+/* --- تنسيق ملخص الفاتورة --- */
+.invoice-summary {
+  width: 300px; /* تحديد عرض كتلة الملخص */
+  margin-left: auto; /* دفعها إلى اليمين */
+  font-size: 0.95rem;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.summary-line span:first-child {
+  color: #c7c7c7;
+}
+
+.summary-line.total-line {
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-top: 1px solid #444;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}

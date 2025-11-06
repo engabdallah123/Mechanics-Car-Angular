@@ -1,0 +1,153 @@
+<div class="app-container">
+  <div class="form-card">
+    <!-- Header -->
+    <div class="form-header">
+      <h2 class="form-title">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="title-icon"
+        >
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 11v6m-3-3h6" />
+        </svg>
+        Create New Customer
+      </h2>
+      <button type="button" class="close-btn" (click)="cancel()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="addCustomer" (ngSubmit)="submit()">
+      <!-- Customer Info -->
+      <div class="customer-info-grid">
+        <div class="form-group grid-span-2">
+          <label>Customer Name *</label>
+          <input
+            formControlName="customerName"
+            placeholder="New Customer"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Phone *</label>
+          <input
+            formControlName="phone"
+            placeholder="0123456789"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Email *</label>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="example@email.com"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <!-- Vehicles -->
+      <div class="vehicles-section">
+        <div class="vehicles-header">
+          <h3 class="vehicles-title">Vehicles</h3>
+          <button type="button" (click)="addVehicle()" class="btn btn-add">
+            + Add Vehicle
+          </button>
+        </div>
+
+        <div formArrayName="vehicles" class="vehicles-list">
+          <div
+            *ngFor="let vehicle of vehicles.controls; let i = index"
+            [formGroupName]="i"
+            class="vehicle-item"
+          >
+            <div class="vehicle-grid">
+              <div class="form-group">
+                <label>Make</label>
+                <select
+                  formControlName="makeId"
+                  (change)="onMakeChange(i)"
+                  class="form-select"
+                >
+                  <option value="">-- Select Make --</option>
+                  <option *ngFor="let make of makes" [value]="make.makeId">
+                    {{ make.makeName }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Model</label>
+                <select formControlName="modelId" class="form-select">
+                  <option value="">-- Select Model --</option>
+                  <option
+                    *ngFor="
+                      let model of vehicles.at(i).get('models')?.value
+                    "
+                    [value]="model.modelId"
+                  >
+                    {{ model.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>License Plate</label>
+                <input
+                  formControlName="licensePlate"
+                  placeholder="ABC-123"
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              (click)="removeVehicle(i)"
+              class="btn-remove-vehicle"
+            >
+              🗑 Remove
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="vehicles.length === 0" class="empty-vehicles">
+          No vehicles added yet.
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" (click)="cancel()" class="btn btn-cancel">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-submit" [disabled]="addCustomer.invalid">
+          Create Customer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<div class="container page-content mt-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="page-title">
+      <h1 class="mb-1"><i class="bi bi-people me-2"></i>Customers</h1>
+      <p class="text-muted mb-0">Manage customers and their vehicles</p>
+    </div>
+
+    <button class="btn btn-primary new-customer-btn" (click)="openAddCustomer()">
+      <i class="bi bi-plus-lg me-2"></i>New Customer
+    </button>
+  </div>
+
+  <!-- 🔍 Search + Sort -->
+  <div
+    class="mb-4 d-flex align-items-center flex-wrap"
+    style="padding: 13px 10px; border: 1px solid #555353; border-radius: 8px;"
+  >
+    <!-- Search -->
+    <div class="col-md-5 mb-3 mb-md-0" style="width: 50%;">
+      <div class="input-group search-input-group">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search customers..."
+          [(ngModel)]="searchText"
+          (input)="applyFilters()"
+        />
+      </div>
+    </div>
+
+    <!-- Sort dropdown -->
+    <div class="col-md-3 mb-3 mb-md-0" style="margin: 0 15px;">
+      <select
+        class="form-select custom-select"
+        [(ngModel)]="sortBy"
+        (change)="applyFilters()"
+      >
+        <option value="name">Sort by Name</option>
+        <option value="vehicles">Sort by Vehicles</option>
+      </select>
+    </div>
+
+    <!-- Sort direction -->
+    <div class="btn-group filter-buttons flex-grow-1" role="group">
+      <button
+        type="button"
+        class="btn btn-secondary w-50"
+        [class.active]="sortDirection === 'asc'"
+        (click)="setSortDirection('asc')"
+      >
+        <i class="bi bi-sort-up"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary w-50"
+        [class.active]="sortDirection === 'desc'"
+        (click)="setSortDirection('desc')"
+      >
+        <i class="bi bi-sort-down"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Customers Grid -->
+  <div class="row customer-cards-grid g-3" style="    margin-bottom: 20px;">
+    <div *ngIf="loadingServices.isLoading | async" class="text-center my-5">
+      <app-spiner-component></app-spiner-component>
+    </div>
+
+    <ng-container *ngIf="!(loadingServices.isLoading | async) && customers && customers.length > 0">
+      @for (customer of filteredCustomers; track $index) {
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="customer-card p-3">
+          <!-- Header: Name + Menu -->
+          <div class="d-flex justify-content-between align-items-center mb-2 position-relative">
+            <h5 class="mb-0">{{ customer?.customerName }}</h5>
+
+            <!-- ⋮ Menu Button -->
+            <button
+              class="btn btn-sm btn-icon-only"
+              type="button"
+              (click)="toggleMenu($index); $event.stopPropagation()"
+            >
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <ul
+              *ngIf="activeMenuIndex === $index"
+              class="dropdown-menu dropdown-menu-end show"
+              style="min-width: 150px; top: 100%; right: 0; position: absolute; z-index: 1050;"
+            >
+              <li>
+                <button
+                  class="dropdown-item d-flex align-items-center"
+                  (click)="openEditCustomer(customer)"
+                >
+                  <i class="bi bi-pencil-square me-2"></i>Edit
+                </button>
+              </li>
+              <li>
+                <button
+                  class="dropdown-item d-flex align-items-center text-danger"
+                  (click)="deleteCustomer(customer.customerId)"
+                >
+                  <i class="bi bi-trash3 me-2"></i>Delete
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Info -->
+          <p class="customer-info">
+            <i class="bi bi-envelope me-2"></i>{{ customer?.email }}
+          </p>
+          <p class="customer-info mb-3">
+            <i class="bi bi-phone me-2"></i>{{ customer?.phoneNumber }}
+          </p>
+
+          <!-- Vehicles -->
+          <div class="d-flex justify-content-between align-items-center mb-2 border-top pt-2">
+            <small class="vehicles">Vehicles ({{ customer?.vehicles?.length || 0 }})</small>
+            <span class="badge rounded-pill bg-secondary vehicle-count">
+              {{ customer?.vehicles?.length || 0 }}
+            </span>
+          </div>
+
+          <ul class="list-unstyled vehicle-list mb-0">
+            <li *ngFor="let vehicle of customer?.vehicles">
+              <span>
+                {{ vehicle.vehicleModel.year.nameYear }}
+                {{ vehicle.vehicleModel.make.makeName }}
+                {{ vehicle.vehicleModel.name }}
+              </span>
+              <span class="vehicle-plate">{{ vehicle?.licensePlate }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      }
+    </ng-container>
+
+    <div
+      *ngIf="!(loadingServices.isLoading | async) && customers && customers.length === 0"
+      class="alert alert-info text-center"
+    >
+      No customers available.
+    </div>
+  </div>
+</div>
+
+<!-- 🧩 Add Customer Modal -->
+<app-add-customer
+  *ngIf="showAddForm"
+  class="modal-wrapper"
+  (closeForm)="closeAddCustomer($event)"
+>
+</app-add-customer>
+
+<!-- ✏️ Edit Customer Modal -->
+<app-edit-customer
+  *ngIf="isEditMode"
+  class="modal-wrapper"
+  [customerId]="selectedCustomerId ?? 0"
+  (closeForm)="closeEditCustomer($event)"
+>
+</app-edit-customer>

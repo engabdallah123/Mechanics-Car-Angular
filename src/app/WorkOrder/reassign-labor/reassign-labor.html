@@ -1,0 +1,51 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h2>Reassign Labor</h2>
+      <i class="bi bi-x close-icon" (click)="close()"></i>
+    </header>
+
+    <div class="workorder-info">
+      <span class="info-item">
+        <i class="bi bi-hash"></i>
+        <strong>Workorder:</strong> {{ workOrder.orderId }}
+      </span>
+      <span class="info-item">
+        🚗
+        <strong>Vehicle:</strong> {{ workOrder.vehicle?.vehicleModel?.make?.makeName }} | {{ workOrder.vehicle?.licensePlate }}
+      </span>
+      <span class="info-item">
+        👷
+        <strong>Labor:</strong> {{ workOrder.technicianName }}
+      </span>
+    </div>
+
+    <div class="labor-list">
+      <div
+        class="labor-card"
+        *ngFor="let labor of labors"
+        [class.selected]="selectedLabor?.laborId === labor.laborId"
+        (click)="selectLabor(labor)"
+      >
+        <i class="bi bi-person-standing"></i>
+        <span>{{ labor.laborName }}</span>
+        <i *ngIf="selectedLabor?.laborId == labor.laborId" class="bi bi-check-circle-fill check-icon"></i>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">
+      <i class="bi bi-x-circle me-2"></i>Cancel
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="save()"
+    >
+      <i class="bi bi-save2 me-2"></i>Save
+    </button>
+  </div>
+  </div>
+</div>
+

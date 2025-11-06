@@ -1,0 +1,351 @@
+:host {
+      --bg-screen: #030712; /* gray-950 */
+      --bg-card: #111827; /* gray-900 */
+      --bg-card-inner: #1f2937; /* gray-800 */
+      --bg-input: #374151; /* gray-700 */
+      --bg-input-hover: #4b5563; /* gray-600 */
+
+      --text-light: #f9fafb; /* gray-50 */
+      --text-med: #d1d5db; /* gray-300 */
+      --text-dark: #9ca3af; /* gray-400 */
+      --text-placeholder: #6b7280; /* gray-500 */
+
+      --border-color: #374151; /* gray-700 */
+      --border-color-inner: #4b5563; /* gray-600 */
+
+      --brand-blue: #2563eb; /* blue-600 */
+      --brand-blue-hover: #1d4ed8; /* blue-700 */
+      --brand-blue-icon: #60a5fa; /* blue-400 */
+
+      --action-gray: #4b5563; /* gray-600 */
+      --action-gray-hover: #374151; /* gray-700 */
+
+      --danger-red: #ef4444; /* red-500 */
+      --danger-red-hover: #dc2626; /* red-600 */
+      --danger-red-icon: #f87171; /* red-400 */
+
+      --radius-lg: 0.5rem; /* 8px */
+      --radius-md: 0.375rem; /* 6px */
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+      font-family: sans-serif;
+    }
+
+ /* الخلفية الشفافة للمودال */
+.app-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(17, 17, 17, 0.75); /* ظل خفيف */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* فوق كل العناصر */
+}
+
+/* كارت الفورم */
+.form-card {
+  background-color: #2e3338;
+  color: var(--text-light, #fff);
+  border-radius: var(--radius-lg, 1rem);
+  box-shadow: var(--shadow, 0 8px 24px rgba(0, 0, 0, 0.3));
+  width: 90%;
+  max-width: 48rem; /* 768px */
+  padding: 2rem;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* حركة بسيطة عند الظهور */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* زر الإغلاق في الركن */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-light, #fff);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.close-btn:hover {
+  color: #f87171;
+}
+
+/* تحسين الاستجابة للشاشات الصغيرة */
+@media (max-width: 640px) {
+  .form-card {
+    padding: 1.5rem;
+  }
+}
+
+
+    @media (max-width: 640px) {
+      .app-container {
+        padding: 1rem;
+      }
+      .form-card {
+        padding: 1.5rem;
+      }
+    }
+
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-title {
+      font-size: 1.5rem; /* text-2xl */
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .title-icon {
+      color: var(--brand-blue-icon);
+      width: 24px;
+      height: 24px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-dark);
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .close-btn:hover {
+      color: var(--text-light);
+    }
+    .close-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem; /* text-sm */
+      font-weight: 500;
+      color: var(--text-med);
+    }
+
+    .form-control,
+    .form-select {
+      width: 100%;
+      padding: 0.625rem; /* p-2.5 */
+      border-radius: var(--radius-lg);
+      background-color: #383e44;
+      border: 1px solid var(--border-color-inner);
+      color: var(--text-light);
+      box-sizing: border-box; /* Ensures padding doesn't affect width */
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control::placeholder {
+      color: var(--text-placeholder);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: #5b9af0;
+       box-shadow: 0 0 0 0.25rem rgba(91, 154, 240, 0.25);
+    }
+
+    .form-select {
+      /* Remove default arrow */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      /* Add custom arrow */
+      background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%239ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1em;
+      padding-right: 2.5rem; /* Make space for arrow */
+    }
+
+    .form-control.invalid-field,
+    .form-select.invalid-field {
+      border-color: var(--danger-red);
+    }
+
+    .form-control.invalid-field:focus,
+    .form-select.invalid-field:focus {
+      box-shadow: 0 0 0 2px var(--danger-red);
+    }
+
+    /* --- Layout Grids --- */
+    .customer-info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .vehicle-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) { /* md breakpoint */
+      .customer-info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .grid-span-2 {
+        grid-column: span 2 / span 2;
+      }
+      .vehicle-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* --- Vehicles Section --- */
+    .vehicles-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .vehicles-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .vehicles-title {
+      font-size: 1.25rem; /* text-xl */
+      font-weight: 600;
+    }
+
+    .vehicles-list {
+      display: flex;
+      flex-direction: column;
+       /* space-y-4 */
+    }
+
+    .vehicle-item {
+      background-color: #2e3338;
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .btn-remove-vehicle {
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      background-color: var(--bg-card-inner);
+      color: var(--danger-red-icon);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 0.125rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .btn-remove-vehicle:hover {
+      color: var(--danger-red);
+      background-color: #383e44;
+    }
+    .btn-remove-vehicle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .empty-vehicles {
+      color: var(--text-placeholder);
+      text-align: center;
+      padding: 1rem;
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+    }
+
+    /* --- Action Buttons --- */
+    .btn {
+      padding: 0.625rem 1.25rem; /* px-5 py-2.5 */
+      border: none;
+      border-radius: var(--radius-lg);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-add {
+      background-color: var(--brand-blue);
+      color: var(--text-light);
+      font-size: 0.875rem;
+      padding: 0.375rem 1rem; /* px-4 py-1.5 */
+    }
+    .btn-add:hover {
+      background-color: var(--brand-blue-hover);
+    }
+
+    .form-actions {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btn-cancel {
+      background-color: var(--action-gray);
+      color: var(--text-light);
+    }
+    .btn-cancel:hover {
+      background-color: #383e44;
+    }
+
+    .btn-submit {
+      background-color: var(--brand-blue);
+      color: var(--text-light);
+    }
+    .btn-submit:hover {
+      background-color: var(--brand-blue-hover);
+    }
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: var(--brand-blue);
+    }
+
+    /* delete vehicle */
+    .old-vehicles-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #444;
+}
+.old-vehicles-list li button {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.old-vehicles-list li button:hover {
+  background: #dc2626;
+}
+

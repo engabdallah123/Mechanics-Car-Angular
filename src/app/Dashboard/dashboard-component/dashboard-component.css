@@ -1,0 +1,140 @@
+.dashboard-container {
+    margin: 30px auto;
+}
+
+.dashboard-title {
+    text-align: center;
+    color: #adb5bd; /* لون رمادي فاتح للعنوان */
+    font-weight: 300;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+/* === إعدادات شبكة البطاقات === */
+.stats-grid {
+    display: grid;
+    gap: 1.25rem; /* المسافة بين البطاقات */
+    margin-bottom: 1.25rem;
+}
+
+/* تحديد عدد الأعمدة لكل شبكة */
+.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+/* === تصميم البطاقة الواحدة === */
+.stat-card {
+    background-color: #2a2d32; /* خلفية البطاقة الافتراضية */
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start; /* محاذاة العناصر لبداية البطاقة (عمودياً) */
+    gap: 1.25rem; /* المسافة بين الأيقونة والمحتوى */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* محتوى البطاقة (العنوان والقيمة) */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    color: #adb5bd; /* لون العنوان (رمادي فاتح) */
+    font-weight: 500;
+}
+
+.card-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffffff; /* لون القيمة (أبيض) */
+}
+
+/* === تصميم الأيقونات === */
+.stat-card i {
+    font-size: 1.75rem; /* حجم الأيقونة */
+    padding-top: 0.3rem; /* لضبط المحاذاة العمودية مع العنوان */
+}
+
+/* === ألوان البطاقات الخاصة (السطر الأول) === */
+
+/* البطاقات الملونة: نجعل كل النصوص والأيقونات بيضاء */
+.color-scheduled,
+.color-progress,
+.color-completed,
+.color-cancelled {
+    color: #ffffff;
+}
+.color-scheduled .card-title,
+.color-progress .card-title,
+.color-completed .card-title,
+.color-cancelled .card-title {
+    color: rgba(255, 255, 255, 0.85); /* أبيض شفاف قليلاً للعنوان */
+}
+.color-scheduled .card-value,
+.color-progress .card-value,
+.color-completed .card-value,
+.color-cancelled .card-value {
+    color: #ffffff;
+}
+
+/* ألوان الخلفية للبطاقات الملونة */
+.color-scheduled { background-color: #ffa50054; } /* أصفر/ذهبي */
+.color-progress  { background-color: #25d7eb69; } /* أزرق */
+.color-completed { background-color: #3ca31645; } /* أخضر */
+.color-cancelled { background-color: #dc262659; } /* أحمر */
+
+
+/* === ألوان الأيقونات (للبطاقات الرمادية) === */
+.icon-orders        { color: #3b82f6; } /* أزرق */
+.icon-revenue       { color: #22c55e; } /* أخضر */
+.icon-parts         { color: #f97316; } /* برتقالي */
+.icon-labor         { color: #f97316; } /* برتقالي */
+.icon-profit        { color: #22c55e; } /* أخضر */
+.icon-vehicles      { color: #06b6d4; } /* سماوي */
+.icon-customers     { color: #06b6d4; } /* سماوي */
+.icon-margin        { color: #22c55e; } /* أخضر */
+.icon-rate          { color: #a855f7; } /* بنفسجي */
+.icon-avg           { color: #a855f7; } /* بنفسجي */
+.icon-order-vehicle { color: #a855f7; } /* بنفسجي */
+.icon-parts-ratio   { color: #eab308; } /* أصفر */
+.icon-labor-ratio   { color: #eab308; } /* أصفر */
+.icon-cancel-rate   { color: #ef4444; } /* أحمر */
+
+
+/* === لجعل التصميم متجاوب (Responsive) على الشاشات الصغيرة === */
+@media (max-width: 1200px) {
+    .grid-5, .grid-4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .grid-5, .grid-4, .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-5, .grid-4, .grid-3 {
+        grid-template-columns: 1fr; /* عمود واحد فقط */
+    }
+    .stat-card {
+        padding: 1.25rem;
+    }
+    .card-value {
+        font-size: 1.75rem;
+    }
+    .stat-card i {
+        font-size: 1.5rem;
+    }
+}
