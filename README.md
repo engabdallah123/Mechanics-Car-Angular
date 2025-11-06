@@ -101,7 +101,7 @@ It allows the manager or employees to:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/mechanics-car-maintenance.git
+   git clone https://github.com/engabdallah123/Mechanics-Car-Angular.git
    ```
 ## 🎥 Video Presentation
 Check out the video presentation of this project on LinkedIn:
